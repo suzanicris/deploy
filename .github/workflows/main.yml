@@ -1,0 +1,23 @@
+name: learning-front
+on:
+  push:
+    branches: [main]
+    
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Build
+        run: yarn install && yarn build
+        
+      - name: Deploy
+        id: deploy-app
+        uses: google-github-actions/deploy-appengine@v0.3.1
+        with:
+          project_id: ${{ secrets.PROJECT_ID }}
+          delivarables: app.yaml
+          credentials: ${{ secrets.GCP_SA_KEY }}
+          version: v1
