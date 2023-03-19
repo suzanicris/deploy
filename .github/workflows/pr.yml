@@ -1,4 +1,4 @@
-name: PR Lint
+name: Check PR
 
 on:
   pull_request:
@@ -9,9 +9,12 @@ on:
     types: [opened, edited, reopened, synchronize]
 
 jobs:
-  pr-lint:
+  pr-check:
     runs-on: ubuntu-latest
     steps:
+    - name: Install
+        run: yarn install
+
       - name: Lint
         run: yarn lint
 
